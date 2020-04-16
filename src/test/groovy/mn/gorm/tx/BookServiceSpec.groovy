@@ -9,7 +9,7 @@ import spock.lang.Specification
 
 import javax.inject.Inject
 
-@MicronautTest(transactional = true, rollback = true)
+@MicronautTest(transactional = true, rollback = true, packages = "mn.gorm.tx.model")
 class BookServiceSpec extends Specification {
     @Inject
     BookService bookService
