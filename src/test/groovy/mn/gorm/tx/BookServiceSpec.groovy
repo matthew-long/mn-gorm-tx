@@ -11,6 +11,7 @@ import javax.inject.Inject
 
 @MicronautTest(transactional = true, rollback = true, packages = "mn.gorm.tx.model")
 class BookServiceSpec extends Specification {
+    
     @Inject
     BookService bookService
 
@@ -22,8 +23,8 @@ class BookServiceSpec extends Specification {
         println "tran active: ${TransactionSynchronizationManager.actualTransactionActive}"
         Book.withTransaction {
             println "tran active: ${TransactionSynchronizationManager.actualTransactionActive}"
+            Book book = new Book(name: "FOO").save(failOnError: true, flush: true)
         }
-        Book book = new Book(name: "FOO").save(failOnError: true, flush: true)
 
         when:
         List<Book> books = bookService.getAllBooks()
