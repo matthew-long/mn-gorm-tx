@@ -3,6 +3,8 @@ micronaut:
     name: mn-gorm-tx
 ---
 hibernate:
+  hbm2ddl:
+    auto: update
   cache:
     queries: false
     use_second_level_cache: false
