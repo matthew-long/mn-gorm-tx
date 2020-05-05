@@ -1,9 +1,13 @@
 package mn.gorm.tx
 
+import io.micronaut.context.ApplicationContext
 import io.micronaut.test.annotation.MicronautTest
+import io.micronaut.test.transaction.TestTransactionInterceptor
+import io.micronaut.test.transaction.spring.SpringTestTransactionInterceptor
 import mn.gorm.tx.model.Book
 import mn.gorm.tx.service.BookService
 import org.hibernate.SessionFactory
+import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.transaction.support.TransactionSynchronizationManager
 import spock.lang.Specification
 
@@ -17,6 +21,17 @@ class BookServiceSpec extends Specification {
 
     @Inject
     SessionFactory sessionFactory
+
+    @Inject
+    ApplicationContext applicationContext
+
+    void "check PlatformTransactionManager exists"() {
+        expect:
+        applicationContext.containsBean(PlatformTransactionManager)
+
+        and:
+        applicationContext.containsBean(SpringTestTransactionInterceptor)
+    }
 
     void "test1"() {
         given:
